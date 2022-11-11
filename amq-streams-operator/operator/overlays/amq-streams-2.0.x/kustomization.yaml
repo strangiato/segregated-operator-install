@@ -1,19 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: openshift-amqstreams-operator
+namespace: openshift-operators
 
 bases:
-  - ../amq-streams-2.0.x
+  - ../../base
 
-resources:
-  - openshift-amqstreams-operator-namespace.yaml
-  - operator-group.yaml
-
-patches:
+patchesJson6902:
   - target:
       group: operators.coreos.com
       version: v1alpha1
       kind: Subscription
       name: amq-streams
-    path: manual-patch.yaml
+      namespace: openshift-operators
+    path: patch-channel.yaml
